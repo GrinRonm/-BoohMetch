@@ -11,6 +11,7 @@ storage/logs/*.log
 # Uploads
 storage/uploads/temp/*
 storage/uploads/*.tmp
+storage/uploads/*.appx
 
 # IDE / Editor
 .vscode/
