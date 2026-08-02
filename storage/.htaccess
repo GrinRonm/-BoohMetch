@@ -1,0 +1,20 @@
+# Запретить доступ ко всем файлам по умолчанию
+<FilesMatch ".*">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Разрешить доступ к необходимым файлам
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js|ico|svg|woff|woff2|ttf|eot)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Запретить выполнение PHP файлов в папке uploads
+<Files ~ "\.php$">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Все остальные файлы - запретить
+Options -Indexes

@@ -1,0 +1,70 @@
+# BoohMetch - Root .htaccess for URL Routing
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Базовая директория
+    RewriteBase /
+    
+    # Пропускаем реальные файлы и папки
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Пропускаем папки с ресурсами
+    RewriteCond %{REQUEST_URI} !^/public/assets/
+    RewriteCond %{REQUEST_URI} !^/storage/
+    RewriteCond %{REQUEST_URI} !^/src/
+    
+    # Пропускаем определённые файлы
+    RewriteCond %{REQUEST_FILENAME} !(\.php|\.jpe?g|\.png|\.gif|\.css|\.js|\.ico|\.svg)$
+    
+    # Все остальные запросы идут в index.php
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Запретить доступ к папкам
+<DirectoryMatch "^/storage|^/config|^/src">
+    Order allow,deny
+    Deny from all
+</DirectoryMatch>
+
+# Запретить доступ к чувствительным файлам
+<FilesMatch "\.php$|\.env|\.htaccess">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Исключение: разрешить index.php
+<FilesMatch "^index\.php$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Разрешить доступ к assets
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js|ico|svg|woff|woff2|ttf|eot|otf)$">
+    Order allow,deny
+    Allow from all
+    <IfModule mod_headers.c>
+        Header add Cache-Control "max-age=31536000, public"
+        Header set Expires "Thu, 01 Dec 2030 16:00:00 GMT"
+    </IfModule>
+</FilesMatch>
+
+# Безопасность
+Options -Indexes
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Отключить PHP выполнение в папке upload
+<Directory "*/storage/uploads/*">
+    <FilesMatch "\.php$">
+        Deny from all
+    </FilesMatch>
+    php_flag engine off
+</Directory>
+php_value error_reporting "E_ALL"
+php_flag display_errors On

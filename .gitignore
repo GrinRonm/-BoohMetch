@@ -1,0 +1,55 @@
+# BoohMetch .gitignore
+
+# Database
+storage/database/*.sqlite
+storage/database/*.sqlite-journal
+storage/database/*.db
+
+# Logs
+storage/logs/*.log
+
+# Uploads
+storage/uploads/temp/*
+storage/uploads/*.tmp
+
+# IDE / Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Composer
+vendor/
+composer.lock
+
+# npm / yarn
+node_modules/
+package-lock.json
+yarn.lock
+
+# OS
+Thumbs.db
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+.#*
+
+# Configuration sensitive files (keep examples)
+config/config.php.example
+
+# Cache
+.cache/
+*.cache

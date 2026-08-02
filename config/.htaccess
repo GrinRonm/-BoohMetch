@@ -1,0 +1,7 @@
+# Запретить доступ к папке config
+<FilesMatch ".*">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+Options -Indexes

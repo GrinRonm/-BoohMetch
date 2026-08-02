@@ -1,0 +1,20 @@
+# BoohMetch - Public Assets folder .htaccess
+# This folder serves static assets only
+
+# Разрешить доступ к файлам assets
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js|ico|svg|woff|woff2|ttf|eot|otf)$">
+    Order allow,deny
+    Allow from all
+    <IfModule mod_headers.c>
+        Header add Cache-Control "max-age=31536000"
+    </IfModule>
+</FilesMatch>
+
+# Запретить листинг папок
+Options -Indexes
+
+# Безопасность - запретить выполнение PHP
+<FilesMatch "\.php$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
